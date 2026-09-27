@@ -1,0 +1,24 @@
+# Unsafe examples demo site.
+#
+# One command brings the whole site up:  docker compose up -d
+# The image builds itself the first time, so a fresh clone on a new server only needs Docker.
+#
+# The public port defaults to 80. To use another port, create a .env file next to this file with
+# PORT=8080, or set PORT in the shell before running compose. Nothing else is configurable and
+# there is no state to migrate, so moving to a new server is clone, up, done.
+
+services:
+  demo:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: unsafe-examples-demo:latest
+    restart: unless-stopped
+    ports:
+      - "${PORT:-80}:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1/ || exit 1"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s

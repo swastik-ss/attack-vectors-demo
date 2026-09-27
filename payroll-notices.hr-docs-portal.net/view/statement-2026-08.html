@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UNSAFE EXAMPLES</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../../assets/favicons/sekant.svg">
+  <script src="../../assets/js/theme.js"></script>
+  <link rel="stylesheet" href="../../assets/css/base.css?v=8">
+  <link rel="stylesheet" href="../../assets/css/scenes.css?v=6">
+</head>
+<body data-root="../../" data-vector="html-smuggling" data-tab-title="Payroll_Statement_2026-08.html" data-tab-icon="attachment.svg">
+
+  <script src="../../assets/js/gate.js?v=2"></script>
+
+  <main class="stage hs-page">
+    <div class="hs-shell">
+      <div class="hs-head">
+        <span class="glyph" aria-hidden="true">HTM</span>
+        <div>
+          <h1>Payroll_Statement_2026-08.html</h1>
+          <div class="sub">Attachment received in an email from hr@payroll-notices.example</div>
+        </div>
+      </div>
+
+      <div class="hs-body">
+        <p>This attachment renders in the browser instead of opening a document viewer. For a payslip, that alone is unusual.</p>
+        <p>In a real campaign the page carries a base64 blob and decodes it at runtime, then hands the result to a download. No payload ever crosses the network, which is why the technique is called smuggling.</p>
+
+        <div class="hs-preview">
+          <pre>const b64 = "U2VrYW50IGRlbW86IHRoaXMgaXMgYSBiZW5pZ24gcGxhY2Vob2xkZXI=";
+const blob = new Blob([<span class="hl">atob</span>(b64)], { type: "application/octet-stream" });
+const link = document.createElement("a");
+link.href = <span class="hl">URL.createObjectURL</span>(blob);
+link.download = "Payroll_Statement_2026-08<span class="hl">.pdf.exe</span>";
+link.click();</pre>
+        </div>
+
+        <p>In this demo the decoded content is a single harmless line of text. Nothing is written to disk.</p>
+      </div>
+
+      <div class="hs-foot">
+        <button type="button" class="dl-btn" data-perform="download">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M8 11.5 12 15.5l4-4"/><path d="M5 19.5h14"/></svg>
+          Download attachment
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <a class="demo-fab demo-fab-menu" href="../../index.html">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1.6"/><rect x="13" y="4" width="7" height="7" rx="1.6"/><rect x="4" y="13" width="7" height="7" rx="1.6"/><rect x="13" y="13" width="7" height="7" rx="1.6"/></svg>
+    Main menu
+  </a>
+
+  <button type="button" class="demo-fab" data-toggle-panel aria-expanded="false">
+    <span class="fab-dot"></span>
+    About this page
+  </button>
+
+  <div id="vector-panel-root"></div>
+
+  <script src="../../assets/js/vectors.js?v=2"></script>
+  <script src="../../assets/js/demo.js"></script>
+</body>
+</html>

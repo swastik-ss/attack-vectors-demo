@@ -1,0 +1,444 @@
+/*
+ * Simulated sign-in pages (phishing clones).
+ *
+ * These follow the layout, type and colour of the live pages as measured from the originals,
+ * for a security awareness demo. Brand marks are mirrored into assets/brand and served locally,
+ * so nothing is fetched from a vendor at runtime. Every form is inert: no network requests, no
+ * credential capture.
+ *
+ * Each clone carries its own token set on the page class, with a dark variant under
+ * html[data-theme="dark"] so the pages follow the theme picked on the landing page.
+ */
+
+/* ===================== Shared scene ===================== */
+
+.scene {
+  padding: 34px 20px 44px;
+  min-height: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===================== Google / Gmail sign-in ===================== */
+
+.g-page {
+  --g-bg: #ffffff;
+  --g-card: #ffffff;
+  --g-ink: #1f1f1f;
+  --g-note: #444746;
+  --g-line: #747775;
+  --g-link: #1a73e8;
+  --g-btn: #1a73e8;
+  --g-btn-ink: #ffffff;
+  --g-hover: rgba(26, 115, 232, 0.08);
+  background: var(--g-bg);
+  color: var(--g-ink);
+}
+/* Measured from the live sign-in page served with a dark colour preference: the card carries no
+   border and no lighter surface, it sits flat on a near black page, the light blue replaces the
+   blue, and the button label turns deep blue. */
+[data-theme="dark"] .g-page {
+  --g-bg: #1e1f20;
+  --g-card: #0e0e0e;
+  --g-ink: #e3e3e3;
+  --g-note: #c4c7c5;
+  --g-line: #8e918f;
+  --g-link: #a8c7fa;
+  --g-btn: #a8c7fa;
+  --g-btn-ink: #062e6f;
+  --g-hover: rgba(168, 199, 250, 0.08);
+}
+
+.g-page > .scene { padding: 40px 20px; }
+
+/* The live card is a flat, generously padded block: brand and heading on the left, the field on
+   the right, and the buttons on their own row underneath. */
+.g-card {
+  width: 100%;
+  max-width: 1040px;
+  background: var(--g-card);
+  border-radius: 28px;
+  padding: 36px;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+}
+
+/* Two equal columns, each with a 24px inner gutter. The field column starts 72px down so the
+   input lines up with the heading rather than the brand mark, exactly as on the original. */
+.g-cols { display: flex; align-items: flex-start; }
+.g-intro { flex: 1 1 50%; min-width: 0; padding-right: 24px; }
+.g-form-col { flex: 1 1 50%; min-width: 0; padding-left: 24px; padding-top: 72px; }
+
+.g-mark { display: block; width: 48px; height: 48px; }
+.g-intro h1 { font-size: 32px; font-weight: 400; line-height: 1.25; margin: 20px 0 0; }
+.g-intro .g-sub { margin: 12px 0 0; font-size: 16px; line-height: 1.5; color: var(--g-ink); }
+
+.g-field { position: relative; height: 54px; }
+.g-field input {
+  width: 100%;
+  height: 100%;
+  padding: 0 15px;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--g-ink);
+  background: transparent;
+  border: 0.8px solid var(--g-line);
+  border-radius: 4px;
+  outline: none;
+}
+.g-field input:focus { border-color: var(--g-link); box-shadow: inset 0 0 0 1px var(--g-link); }
+.g-field label {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 4px;
+  background: var(--g-card);
+  font-size: 16px;
+  color: var(--g-note);
+  pointer-events: none;
+  transition: top 0.12s, font-size 0.12s, color 0.12s;
+}
+.g-field input:focus + label,
+.g-field input:not(:placeholder-shown) + label {
+  top: 0;
+  font-size: 12px;
+  color: var(--g-link);
+}
+
+.g-hint { margin-top: 8px; }
+.g-forgot {
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--g-link);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.g-link { color: var(--g-link); font-weight: 500; }
+.g-link:hover, .g-forgot:hover { text-decoration: underline; }
+.g-note { margin: 24px 0 0; font-size: 14px; line-height: 1.5; color: var(--g-note); }
+
+.g-actions {
+  margin-top: 24px;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.g-text-btn {
+  border: none;
+  background: none;
+  color: var(--g-link);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 16px;
+  height: 40px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.g-text-btn:hover { background: var(--g-hover); }
+.g-next {
+  border: none;
+  background: var(--g-btn);
+  color: var(--g-btn-ink);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  padding: 0 24px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.g-next:hover { filter: brightness(0.94); }
+
+.g-foot {
+  width: 100%;
+  max-width: 1040px;
+  margin: 20px auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--g-ink);
+  font-family: Roboto, Arial, sans-serif;
+}
+.g-foot a { margin-left: 18px; }
+.g-foot a:hover { text-decoration: underline; }
+
+/* One column once the two panes can no longer sit side by side. */
+@media (max-width: 860px) {
+  .g-card { padding: 32px 24px 24px; }
+  .g-cols { flex-direction: column; align-items: stretch; }
+  .g-intro { padding-right: 0; }
+  .g-form-col { padding-left: 0; padding-top: 32px; }
+  .g-intro h1 { font-size: 28px; }
+}
+
+/* ===================== Instagram login ===================== */
+
+.ig-page {
+  --ig-bg: #ffffff;
+  --ig-col: #ffffff;
+  --ig-ink: #111112;
+  --ig-sub: #737373;
+  --ig-line: #d0d3d6;
+  --ig-divide: #dfe2e5;
+  --ig-link: #4150f7;
+  --ig-primary: #0064e0;
+  --ig-primary-ink: #f2f4f6;
+  --ig-second: #f2f4f6;
+  --ig-second-ink: #28292c;
+  background: var(--ig-bg);
+  color: var(--ig-ink);
+}
+[data-theme="dark"] .ig-page {
+  --ig-bg: #0c1014;
+  --ig-col: #1f1f22;
+  --ig-ink: #f2f4f6;
+  --ig-sub: #a8a8a8;
+  --ig-line: #50545b;
+  --ig-divide: #2b2b2f;
+  --ig-link: #708dff;
+  --ig-primary: #0064e0;
+  --ig-primary-ink: #f5f5f5;
+  --ig-second: #28292c;
+  --ig-second-ink: #f5f5f5;
+}
+
+.ig-page > .scene { padding: 0; align-items: stretch; min-height: 100vh; }
+.ig-wrap { display: flex; flex: 1; min-height: 100vh; }
+
+/* Left panel holds the promo artwork the original shows beside the form. */
+.ig-art {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  padding: 40px;
+}
+.ig-art img { display: block; width: min(748px, 100%); aspect-ratio: 748 / 530; object-fit: cover; height: auto; }
+
+.ig-col {
+  flex: none;
+  width: 650px;
+  max-width: 100%;
+  background: var(--ig-col);
+  border-left: 2px solid var(--ig-divide);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  font-family: Optimistic, "Segoe UI Historic", "Segoe UI", Helvetica, Arial, sans-serif;
+}
+.ig-inner { width: 100%; max-width: 546px; }
+.ig-inner h1 { font-size: 17px; font-weight: 600; color: var(--ig-ink); margin-bottom: 22px; }
+
+.ig-form { display: flex; flex-direction: column; gap: 12px; }
+.ig-field { position: relative; height: 60px; }
+.ig-field input {
+  width: 100%;
+  height: 100%;
+  padding: 0 16px;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--ig-ink);
+  background: transparent;
+  border: 1px solid var(--ig-line);
+  border-radius: 16px;
+  outline: none;
+}
+.ig-field input:focus { border-color: var(--ig-ink); }
+.ig-field label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 4px;
+  background: var(--ig-col);
+  font-size: 15px;
+  color: var(--ig-sub);
+  pointer-events: none;
+  transition: top 0.12s, font-size 0.12s;
+}
+.ig-field input:focus + label,
+.ig-field input:not(:placeholder-shown) + label { top: 0; font-size: 11px; color: var(--ig-sub); }
+
+.ig-login {
+  margin-top: 4px;
+  width: 100%;
+  height: 44px;
+  border: none;
+  border-radius: 22px;
+  background: var(--ig-primary);
+  color: var(--ig-primary-ink);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ig-login:hover { filter: brightness(1.06); }
+
+.ig-forgot { display: block; margin-top: 22px; text-align: center; font-size: 15px; font-weight: 500; color: var(--ig-ink); }
+
+.ig-fb {
+  margin-top: 22px;
+  height: 44px;
+  border-radius: 22px;
+  background: var(--ig-second);
+  color: var(--ig-second-ink);
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+.ig-fb .fb-glyph {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #1877f2;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+}
+
+.ig-create {
+  margin-top: 12px;
+  height: 44px;
+  border-radius: 22px;
+  border: 1px solid var(--ig-line);
+  color: var(--ig-link);
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ig-create:hover { border-color: var(--ig-link); }
+
+.ig-meta {
+  margin-top: 44px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--ig-sub);
+}
+.ig-meta a:hover { text-decoration: underline; }
+
+/* ===================== Microsoft sign-in ===================== */
+
+.ms-page {
+  --ms-bg: #ffffff;
+  --ms-card: #ffffff;
+  --ms-ink: #1b1b1b;
+  --ms-logo-ink: #737373;
+  --ms-line: rgba(0, 0, 0, 0.6);
+  --ms-link: #0067b8;
+  --ms-btn: #0067b8;
+  --ms-btn-ink: #ffffff;
+  background: var(--ms-bg);
+  color: var(--ms-ink);
+}
+[data-theme="dark"] .ms-page {
+  --ms-bg: #1b1a19;
+  --ms-card: #252423;
+  --ms-ink: #ffffff;
+  --ms-logo-ink: #ffffff;
+  --ms-line: rgba(255, 255, 255, 0.6);
+  --ms-link: #4da3ff;
+  --ms-btn: #0067b8;
+  --ms-btn-ink: #ffffff;
+}
+
+.ms-page > .scene { padding: 0; justify-content: space-between; min-height: 100vh; }
+
+.ms-card {
+  width: 100%;
+  max-width: 440px;
+  margin: auto;
+  background: var(--ms-card);
+  padding: 44px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  font-family: "Segoe UI Webfont", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+.ms-logo { display: block; width: 108px; height: 24px; margin-bottom: 18px; color: var(--ms-logo-ink); }
+
+.ms-card h1 { font-size: 24px; font-weight: 600; }
+.ms-card .ms-sub { margin-top: 16px; font-size: 15px; }
+
+.ms-field { position: relative; height: 36px; margin-top: 26px; }
+.ms-field input {
+  width: 100%;
+  height: 100%;
+  padding: 6px 10px 6px 0;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--ms-ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--ms-line);
+  outline: none;
+}
+.ms-field input:focus { border-bottom: 2px solid var(--ms-link); padding-bottom: 5px; }
+.ms-field label {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: var(--ms-ink);
+  pointer-events: none;
+  transition: top 0.12s, font-size 0.12s;
+}
+.ms-field input:focus + label,
+.ms-field input:not(:placeholder-shown) + label { top: -6px; font-size: 12px; }
+
+.ms-account { margin-top: 20px; font-size: 13px; }
+.ms-account a { color: var(--ms-link); }
+.ms-account a:hover { text-decoration: underline; }
+.ms-link { display: inline-block; margin-top: 18px; font-size: 13px; color: var(--ms-link); }
+.ms-link:hover { text-decoration: underline; }
+
+.ms-actions { margin-top: 26px; text-align: right; }
+.ms-next {
+  min-width: 108px;
+  height: 32px;
+  padding: 4px 12px;
+  border: none;
+  background: var(--ms-btn);
+  color: var(--ms-btn-ink);
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+.ms-next:hover { filter: brightness(0.94); }
+
+/* Footer: the original is a translucent bar over the page art. */
+.ms-foot {
+  flex: none;
+  width: 100%;
+  padding: 8px 24px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: flex-end;
+  align-items: center;
+}
+.ms-foot a { color: #fff; }
+.ms-foot a:hover { text-decoration: underline; }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sekant Simulated Test - OAuth Consent</title>
+  <script src="../guard.js"></script>
+  <style>
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f5f5;margin:0;padding:2rem}
+    .sim-banner{background:#b02a1e;color:#fff;font-size:.85rem;padding:.6rem 1rem;border-radius:6px;max-width:520px;margin:0 auto 1rem;text-align:center}
+    .sim-banner a{color:#fff}
+    .card{max-width:520px;margin:0 auto;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.12);padding:2rem}
+    h1{font-size:1.3rem;color:#202124;margin:0 0 .5rem}
+    h2{font-size:.95rem;color:#5f6368;font-weight:500;margin:0 0 1.5rem}
+    .param{margin:.75rem 0}
+    .param .k{font-size:.72rem;text-transform:uppercase;color:#80868b}
+    .param .v{font-size:.95rem;color:#202124;word-break:break-all;background:#f8f9fa;padding:.3rem .5rem;border-radius:6px}
+    .scope{display:inline-block;background:#e8f0fe;color:#1a73e8;border:1px solid #c6dafc;border-radius:12px;padding:.2rem .6rem;margin:.15rem;font-size:.8rem}
+    .actions{margin-top:1.5rem;display:flex;gap:.75rem;justify-content:flex-end}
+    button{border:none;border-radius:6px;padding:.55rem 1.1rem;font-size:.9rem;cursor:pointer}
+    #allow{background:#1a73e8;color:#fff}
+    #cancel{background:#e8eaed;color:#202124}
+    .note{margin-top:1.5rem;font-size:.75rem;color:#9aa0a6;border-top:1px solid #eee;padding-top:.75rem}
+  </style>
+</head>
+<body>
+  <div class="sim-banner">⚠ SIMULATED TEST - not a real consent screen. <a href="../index.html">Back to test list</a></div>
+  <div class="card">
+    <h1>Sign in with Google</h1>
+    <h2>A local test page is mimicking the OAuth consent screen.</h2>
+
+    <div class="param"><div class="k">client_id</div><div class="v" id="client_id">-</div></div>
+    <div class="param"><div class="k">response_type</div><div class="v" id="response_type">-</div></div>
+    <div class="param"><div class="k">redirect_uri</div><div class="v" id="redirect_uri">-</div></div>
+    <div class="param"><div class="k">requested scopes</div><div class="v" id="scopes">-</div></div>
+
+    <div class="actions">
+      <button id="cancel">Cancel</button>
+      <button id="allow">Allow</button>
+    </div>
+    <div class="note">
+      Simulated test fixture - parses the OAuth consent URL parameters so the Sekant extension's consent detector can
+      classify the request (unsafe = unfamiliar redirect_uri; suspicious = non-privileged scope from an unfamiliar
+      referrer). No real OAuth request is made.
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const params = new URLSearchParams(location.search);
+      const set = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      };
+      set("client_id", params.get("client_id") || "-");
+      set("response_type", params.get("response_type") || "-");
+      set("redirect_uri", params.get("redirect_uri") || "-");
+      const scopes = (params.get("scope") || "")
+        .split(/[\s+,]+/)
+        .filter(Boolean)
+        .map((s) => `<span class="scope">${s}</span>`);
+      set("scopes", scopes.length ? scopes.join(" ") : "-");
+    })();
+  </script>
+</body>
+</html>

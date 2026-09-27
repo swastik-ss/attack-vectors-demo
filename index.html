@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UNSAFE EXAMPLES</title>
+  <meta name="description" content="A safe, simulated collection of common attack vectors for testing browser protection.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="assets/favicons/sekant.svg">
+  <script src="assets/js/theme.js"></script>
+  <link rel="stylesheet" href="assets/css/base.css?v=9">
+</head>
+<body class="home" data-root="">
+
+  <script src="assets/js/gate.js?v=2"></script>
+
+  <noscript>
+    <div class="noscript-note">JavaScript is disabled, so the warning disclaimer could not be shown. Everything on this site is a harmless simulation.</div>
+  </noscript>
+
+  <div id="shell" class="home-shell">
+    <main class="home-main">
+      <div class="home-intro">
+        <p class="eyebrow">Security awareness demo</p>
+        <h1>See how a real attack works, without the risk.</h1>
+        <p class="lede">Each page below recreates a lure that lands in real inboxes, so you can study the trick up close and watch your protection respond. Nothing here is real: no malware, no credential capture.</p>
+      </div>
+
+      <div class="home-grid" id="vector-grid"></div>
+    </main>
+  </div>
+
+  <button type="button" class="theme-btn" id="theme-toggle" aria-label="Switch colour theme" title="Switch colour theme">
+    <svg class="ico-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2"/><path d="M12 19.2v2.2"/><path d="M2.6 12h2.2"/><path d="M19.2 12h2.2"/><path d="M5.4 5.4l1.6 1.6"/><path d="M17 17l1.6 1.6"/><path d="M18.6 5.4 17 7"/><path d="M7 17 5.4 18.6"/></svg>
+    <svg class="ico-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.5 8.5 0 1 0 10.2 10.2Z"/></svg>
+  </button>
+
+  <script src="assets/js/vectors.js?v=3"></script>
+  <script src="assets/js/demo.js?v=3"></script>
+</body>
+</html>
