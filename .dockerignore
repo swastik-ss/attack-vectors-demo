@@ -1,4 +1,4 @@
-# Keep repository and deployment plumbing out of the image.
+# Keep repository, Cloudflare and deployment plumbing out of the image.
 # Note: the docker folder is deliberately not listed here, the Dockerfile copies nginx.conf from
 # it and then removes the folder from the web root.
 
@@ -6,4 +6,7 @@
 .gitignore
 .env
 README.md
+.wrangler
+wrangler.jsonc
+.assetsignore
 docker-compose.yml

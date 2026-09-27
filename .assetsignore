@@ -1,0 +1,12 @@
+# Files in this folder that must not be published as site assets.
+# Same syntax as .gitignore.
+
+.git/
+.gitignore
+.env
+README.md
+.assetsignore
+wrangler.jsonc
+.wrangler/
+docker/
+docker-compose.yml

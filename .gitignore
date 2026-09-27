@@ -1,0 +1,7 @@
+# Local wrangler state and caches, created when the Cloudflare config is used locally.
+.wrangler/
+
+# Local overrides, for example PORT for docker compose.
+.env
+
+node_modules/

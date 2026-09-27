@@ -1,0 +1,23 @@
+{
+  // Cloudflare Workers deploy config for the unsafe examples demo site.
+  //
+  // There is no build step and no Worker script: the whole project folder is uploaded as static
+  // assets, so asset requests are served straight from Cloudflare's cache and are not billed as
+  // Worker invocations.
+  //
+  // Deploy by connecting this repository in the Cloudflare dashboard with an empty build command
+  // and the deploy command "npx wrangler deploy", or by running that command yourself.
+  //
+  // html_handling "auto-trailing-slash" is left at its default and matches how the pages are
+  // linked: file URLs such as identifier.html resolve, and directory URLs such as
+  // oauth2/consent/?client_id=... resolve to that folder's index.html with the query string kept.
+
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "unsafe-examples-demo",
+  "compatibility_date": "2026-09-27",
+  "assets": {
+    "directory": "./",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
